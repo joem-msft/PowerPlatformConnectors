@@ -1,0 +1,210 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "PowerApps Utilities",
+    "description": "Utilities for accomplishing various tasks not natively supported by PowerApps",
+    "version": "1.0",
+    "contact": {
+      "name": "Joe Mayo",
+      "email": "joemay@microsoft.com"
+    },
+    "x-ms-api-annotation": {
+      "status": "Preview"
+    }
+  },
+  "tags": [],
+  "host": "joem-pautilities.azurewebsites.net",
+  "basePath": "/api",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/Base64ToText": {
+      "post": {
+        "operationId": "Base64ToText",
+        "summary": "Base64ToText",
+        "description": "Decodes a base64 string to its text representation. This assumes the binary data underlying the base64 string was encoded using UTF8.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "base64String"
+              ],
+              "properties": {
+                "base64String": {
+                  "type": "string",
+                  "title": "base64 encoded string",
+                  "description": "The base65 encoded string to convert.",
+                  "example": "SGVsbG8gd29ybGQh"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/decoded-text"
+            }
+          }
+        }
+      }
+    },
+    "/BlobToText": {
+      "post": {
+        "operationId": "BlobToText",
+        "summary": "BlobToText",
+        "description": "BlobToText",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "blob"
+              ],
+              "properties": {
+                "blob": {
+                  "type": "string",
+                  "format": "byte",
+                  "title": "The blob to convert",
+                  "description": "In PowerApps, this would be the picture, video, document, or other binary data entity.",
+                  "example": "SGVsbG8gd29ybGQh"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/decoded-text"
+            }
+          }
+        }
+      }
+    },
+    "/TextToBase64": {
+      "post": {
+        "operationId": "TextToBase64",
+        "summary": "TextToBase64",
+        "description": "Decodes a base64 string to its text representation. This assumes the binary data underlying the base64 string was encoded using UTF8.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "text"
+              ],
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "title": "The text to convert",
+                  "description": "The text to encode to a base65 encoded string.",
+                  "example": "Hello world!"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "string",
+              "title": "Encoded base64 string",
+              "description": "The input text encoded as a base64 string."
+            }
+          }
+        }
+      }
+    },
+    "/TestConnection": {
+      "get": {
+        "operationId": "TestConnection",
+        "summary": "TestConnection",
+        "description": "Tests a user's connection to the Function App.",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/Wait": {
+      "post": {
+        "operationId": "Wait",
+        "summary": "Wait a period of time",
+        "description": "Waits for a period of time before the request is returned.",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "required": [
+                "Milliseconds"
+              ],
+              "properties": {
+                "Milliseconds": {
+                  "type": "integer",
+                  "title": "The number of milliseconds to wait until the response is returned.",
+                  "description": "The number of milliseconds to wait until the response is returned."
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  },
+  "parameters": {},
+  "definitions": {
+    "decoded-text": {
+      "type": "string",
+      "title": "Decoded text",
+      "description": "The decoded text."
+    }
+  },
+  "securityDefinitions": {
+    "Host Key": {
+      "type": "apiKey",
+      "description": "Azure Function App's host key",
+      "in": "query",
+      "name": "code"
+    }
+  },
+  "security": [
+    {
+      "Host Key": []
+    }
+  ],
+  "x-ms-capabilities": {
+    "testConnection": {
+      "operationId": "TestConnection"
+    }
+  }
+}

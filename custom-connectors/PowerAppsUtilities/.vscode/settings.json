@@ -1,0 +1,27 @@
+{
+    "editor.insertSpaces": true,
+    "[json]": {
+        "editor.detectIndentation": false,
+        "editor.tabSize": 2,
+        "files.trimTrailingWhitespace": true
+    },
+    "json.schemas": [
+        {
+            "fileMatch": [
+                "/apiDefinition.swagger.json"
+            ],
+            "url": "http://json.schemastore.org/swagger-2.0"
+        },
+        {
+            "fileMatch": [
+                "/*.postman_collection.json"
+            ],
+            "url": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+        }
+    ],
+    "azureFunctions.deploySubpath": "FunctionApp/bin/Release/netcoreapp2.1/publish",
+    "azureFunctions.projectLanguage": "C#",
+    "azureFunctions.projectRuntime": "~2",
+    "debug.internalConsoleOptions": "neverOpen",
+    "azureFunctions.preDeployTask": "publish"
+}

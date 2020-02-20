@@ -1,0 +1,155 @@
+{
+  "info": {
+    "_postman_id": "41735d87-da80-4caf-ba85-31ff38ff0804",
+    "name": "PAUtilities",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "TestConnection",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:7071/api/TestConnection",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "7071",
+          "path": [
+            "api",
+            "TestConnection"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "BlobToText",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"blob\":\"SGVsbG8gd29ybGQh\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:7071/api/BlobToText",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "7071",
+          "path": [
+            "api",
+            "BlobToText"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Base64ToText",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "value": "application/json",
+            "type": "text"
+          },
+          {
+            "key": "Accept",
+            "value": "application/json",
+            "type": "text",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"base64String\":\"SGVsbG8gd29ybGQh\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:7071/api/Base64ToText",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "7071",
+          "path": [
+            "api",
+            "Base64ToText"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "TextToBase64",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "name": "Content-Type",
+            "type": "text",
+            "value": "application/json"
+          },
+          {
+            "key": "Accept",
+            "type": "text",
+            "value": "application/json",
+            "disabled": true
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"text\":\"Hello world!\"}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "http://localhost:7071/api/TextToBase64",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "7071",
+          "path": [
+            "api",
+            "TextToBase64"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "protocolProfileBehavior": {}
+}

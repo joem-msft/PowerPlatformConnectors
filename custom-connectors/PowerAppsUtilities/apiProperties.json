@@ -1,0 +1,42 @@
+{
+  "properties": {
+    "capabilities": [],
+    "connectionParameters": {
+      "functionAppHostName": {
+        "type": "string",
+        "uiDefinition": {
+          "constraints": {
+            "tabIndex": 1,
+            "required": "true"
+          },
+          "description": "Specify the host name for the Azure Functions app hosting the utility functions. e.g. mymockfunctionapp.azurewebsites.net",
+          "displayName": "Azure Functions app host name",
+          "tooltip": "Azure Functions app host name"
+        }
+      },
+      "api_key": {
+        "type": "securestring",
+        "uiDefinition": {
+          "displayName": "Host Key",
+          "description": "The Azure Functions Host Key for this connection",
+          "tooltip": "Provide your Host Key",
+          "constraints": {
+            "tabIndex": 2,
+            "required": "true",
+            "clearText": false
+          }
+        }
+      }
+    },
+    "iconBrandColor": "#007ee5",
+    "policyTemplateInstances": [
+      {
+        "parameters": {
+          "x-ms-apimTemplateParameter.urlTemplate": "https://@connectionParameters('functionAppHostName')/api/"
+        },
+        "templateId": "dynamichosturl",
+        "title": "Azure Functions app url"
+      }
+    ]
+  }
+}
