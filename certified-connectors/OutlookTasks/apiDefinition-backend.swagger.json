@@ -1,0 +1,835 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Outlook Tasks",
+    "description": "Outlook Tasks service lets you create, read, synchronize, update and delete your tasks that are secured by Azure Active Directory in Office 365 or a Microsoft account."
+  },
+  "externalDocs": {
+    "url": "https://docs.microsoft.com/en-us/previous-versions/office/office-365-api/api/version-2.0/task-rest-operations"
+  },
+  "host": "outlook.office.com",
+  "basePath": "/api/v2.0",
+  "schemes": [
+    "https"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/me/tasks": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "List all tasks",
+        "description": "This operation returns a list of tasks in all the task folders in the users mailbox.",
+        "operationId": "GetAllTasks",
+        "parameters": [
+          {
+            "$ref": "#/parameters/OdataQueryOption-$top"
+          },
+          {
+            "$ref": "#/parameters/OdataQueryOption-$skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/OdataCollection<TaskResource>"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Create a task",
+        "description": "This operation is used to create a task in the default task folder.",
+        "operationId": "CreateTask",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TaskResource"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/TaskResource"
+          }
+        }
+      }
+    },
+    "/me/tasks('{task_id}')": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Get a task",
+        "description": "This operation returns the current state of tasks in the users mailbox.",
+        "operationId": "GetTask",
+        "parameters": [
+          {
+            "$ref": "#/parameters/task_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/TaskResource"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Update a task",
+        "description": "This operation is used to update a task in the users mailbox.",
+        "operationId": "PatchTask",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/task_id"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TaskResource"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/TaskResource"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Delete a task",
+        "description": "This operation is used to delete a task from the users mailbox.",
+        "operationId": "DeleteTask",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/task_id"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content - The operation has succeeded."
+          }
+        }
+      }
+    },
+    "/me/tasks('{task_id}')/complete": {
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Complete a task",
+        "description": "This operation completes a task and sets the 'CompletedDateTime' to now, and the 'Status' to 'Completed'.",
+        "operationId": "CompleteTask",
+        "parameters": [
+          {
+            "$ref": "#/parameters/task_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/TaskResource"
+          }
+        }
+      }
+    },
+    "/me/taskfolders": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "List all task folders",
+        "description": "Returns a list of all the task folders in your mailbox.",
+        "operationId": "GetAllTaskFolders",
+        "parameters": [
+          {
+            "$ref": "#/parameters/OdataQueryOption-$top"
+          },
+          {
+            "$ref": "#/parameters/OdataQueryOption-$skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/OdataCollection<TaskFolder>"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Create a task folder",
+        "description": "This operation creates a new task folder in the default task group (`My Tasks`) in your mailbox.",
+        "operationId": "CreateTaskFolder",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TaskFolder"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/responses/TaskFolder"
+          }
+        }
+      }
+    },
+    "/me/taskfolders('{folder_id}')": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Gets a task folder",
+        "description": "This operation gets a specific task folder.",
+        "operationId": "GetTasksFolder",
+        "parameters": [
+          {
+            "$ref": "#/parameters/folder_id"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/TaskFolder"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Update a task in a folder",
+        "description": "This operation is used to modify an existing task folder.",
+        "operationId": "UpdateTaskFolder",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/folder_id"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TaskFolder"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/TaskFolder"
+          }
+        }
+      }
+    },
+    "/me/taskfolders('{folder_id}')/tasks": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "List tasks in a folder",
+        "description": "This operation gets all the tasks in a specific folder.",
+        "operationId": "GetTasksInFolder",
+        "parameters": [
+          {
+            "$ref": "#/parameters/folder_id"
+          },
+          {
+            "$ref": "#/parameters/OdataQueryOption-$top"
+          },
+          {
+            "$ref": "#/parameters/OdataQueryOption-$skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/OdataCollection<TaskResource>"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Create a task in a folder",
+        "description": "This operation is used to create a task in a specific task folder.",
+        "operationId": "CreateTaskInFolder",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/folder_id"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TaskResource"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/responses/TaskResource"
+          }
+        }
+      }
+    },
+    "/me/taskgroups": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "List all task groups",
+        "description": "Returns a list of all the task groups in your mailbox.",
+        "operationId": "GetAllTaskGroups",
+        "parameters": [
+          {
+            "$ref": "#/parameters/OdataQueryOption-$top"
+          },
+          {
+            "$ref": "#/parameters/OdataQueryOption-$skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/OdataCollection<TaskGroup>"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Create a task group",
+        "description": "This operation creates a new task group in your mailbox.",
+        "operationId": "CreateTaskGroup",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TaskGroup"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/responses/TaskGroup"
+          }
+        }
+      }
+    },
+    "/me/taskgroups('{group_id}')/taskfolders": {
+      "get": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "List task folders in group",
+        "description": "Returns a list of all the task folders in the specified task group in your mailbox.",
+        "operationId": "GetTaskFoldersInGroup",
+        "parameters": [
+          {
+            "$ref": "#/parameters/group_id"
+          },
+          {
+            "$ref": "#/parameters/OdataQueryOption-$top"
+          },
+          {
+            "$ref": "#/parameters/OdataQueryOption-$skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/OdataCollection<TaskFolder>"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Tasks"
+        ],
+        "summary": "Create a task folder under a specific task group",
+        "description": "This operation creates a new task folder in the specified task group in your mailbox.",
+        "operationId": "CreateTaskFolderInGroup",
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "$ref": "#/parameters/group_id"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/TaskFolder"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "$ref": "#/responses/TaskFolder"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "TaskResource": {
+      "description": "An Outlook task object.",
+      "type": "object",
+      "required": [
+        "Subject"
+      ],
+      "properties": {
+        "Id": {
+          "title": "Id",
+          "description": "Unique identifier of the task.",
+          "type": "string",
+          "readOnly": true,
+          "x-ms-visibility": "advanced"
+        },
+        "CreatedDateTime": {
+          "format": "date-time",
+          "title": "Created Date-Time",
+          "description": "YYYY-MM-DDThh:mm:ssZ (UTC format).",
+          "type": "string",
+          "readOnly": true,
+          "x-ms-visibility": "advanced"
+        },
+        "LastModifiedDateTime": {
+          "format": "date-time",
+          "title": "Modified Date-Time",
+          "description": "YYYY-MM-DDThh:mm:ssZ (UTC format).",
+          "type": "string",
+          "readOnly": true,
+          "x-ms-visibility": "advanced"
+        },
+        "ChangeKey": {
+          "type": "string",
+          "readOnly": true,
+          "x-ms-visibility": "internal"
+        },
+        "Categories": {
+          "$ref": "#/definitions/TaskResource-Categories"
+        },
+        "AssignedTo": {
+          "title": "Assigned To",
+          "description": "Name of the person who has been assigned the task.",
+          "x-ms-visibility": "important",
+          "type": "string"
+        },
+        "Body": {
+          "$ref": "#/definitions/TaskResource-ItemBody"
+        },
+        "CompletedDateTime": {
+          "$ref": "#/definitions/TaskResource-CompletedDateTime"
+        },
+        "DueDateTime": {
+          "$ref": "#/definitions/TaskResource-DueDateTime"
+        },
+        "Importance": {
+          "$ref": "#/definitions/Enumerations-Importance"
+        },
+        "Owner": {
+          "title": "Owner",
+          "description": "Name of the person who created the task.",
+          "type": "string",
+          "readOnly": true,
+          "x-ms-visibility": "advanced"
+        },
+        "ParentFolderId": {
+          "description": "The unique identifier for the task's parent folder.",
+          "type": "string",
+          "readOnly": true,
+          "x-ms-visibility": "advanced"
+        },
+        "IsReminderOn": {
+          "title": "Is reminder on",
+          "description": "True if an alert is set to remind the user of the task.",
+          "type": "boolean",
+          "x-ms-visibility": "advanced"
+        },
+        "ReminderDateTime": {
+          "$ref": "#/definitions/TaskResource-ReminderDateTime"
+        },
+        "Sensitivity": {
+          "$ref": "#/definitions/Enumerations-Sensitivity"
+        },
+        "StartDateTime": {
+          "$ref": "#/definitions/TaskResource-StartDateTime"
+        },
+        "Status": {
+          "$ref": "#/definitions/Enumerations-TaskStatusV2"
+        },
+        "Subject": {
+          "title": "Subject",
+          "description": "Brief description or title of the task.",
+          "type": "string",
+          "x-ms-visibility": "important"
+        }
+      }
+    },
+    "TaskResource-Categories": {
+      "title": "Categories",
+      "description": "Collection of category names associated with the task.",
+      "type": "array",
+      "items": {
+        "title": "Category",
+        "description": "Associated with the task.",
+        "type": "string"
+      },
+      "x-ms-visibility": "advanced"
+    },
+    "TaskResource-ItemBody": {
+      "title": "Body",
+      "description": "Task body that typically contains information about the task.",
+      "type": "object",
+      "properties": {
+        "ContentType": {
+          "title": "Content Type",
+          "description": "Text=0, HTML=1.",
+          "enum": [
+            "Text",
+            "HTML"
+          ],
+          "type": "string",
+          "x-ms-visibility": "advanced"
+        },
+        "Content": {
+          "title": "Content",
+          "description": "The text or HTML content.",
+          "type": "string",
+          "x-ms-visibility": "important"
+        }
+      }
+    },
+    "TaskResource-CompletedDateTime": {
+      "title": "Completed",
+      "description": "Date-time in the UTC time zone when the task was finished.",
+      "type": "object"
+    },
+    "TaskResource-DueDateTime": {
+      "title": "Due",
+      "description": "Date in the UTC time zone when the task is to be finished.",
+      "type": "object"
+    },
+    "TaskResource-ReminderDateTime": {
+      "title": "Reminder",
+      "description": "Date-time in the UTC time zone for a reminder alert of the task to occur.",
+      "type": "object"
+    },
+    "TaskResource-StartDateTime": {
+      "title": "Start",
+      "description": "Date in the UTC time zone when the task is to begin.",
+      "type": "object"
+    },
+    "TaskFolder": {
+      "description": "An Outlook task folder.",
+      "type": "object",
+      "required": [
+        "Name"
+      ],
+      "properties": {
+        "@odata.id": {
+          "type": "string",
+          "x-ms-visibility": "internal",
+          "readOnly": true
+        },
+        "Id": {
+          "title": "Id",
+          "description": "Unique identifier of the task folder.",
+          "type": "string",
+          "readOnly": true
+        },
+        "Name": {
+          "title": "Name",
+          "description": "Name of the task folder.",
+          "type": "string"
+        },
+        "ChangeKey": {
+          "type": "string",
+          "x-ms-visibility": "internal",
+          "readOnly": true
+        },
+        "IsDefaultFolder": {
+          "x-ms-summary": "Is Default",
+          "description": "True if this is the default task folder.",
+          "type": "boolean",
+          "x-ms-visibility": "advanced",
+          "readOnly": true
+        },
+        "ParentGroupKey": {
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "TaskGroup": {
+      "description": "An Outlook task folder.",
+      "type": "object",
+      "required": [
+        "Name"
+      ],
+      "properties": {
+        "@odata.id": {
+          "type": "string",
+          "x-ms-visibility": "internal",
+          "readOnly": true
+        },
+        "Id": {
+          "type": "string",
+          "readOnly": true
+        },
+        "Name": {
+          "title": "Name",
+          "description": "Name of the task group.",
+          "type": "string"
+        },
+        "ChangeKey": {
+          "type": "string",
+          "x-ms-visibility": "internal",
+          "readOnly": true
+        },
+        "IsDefaultGroup": {
+          "x-ms-summary": "Is Default",
+          "description": "True if default task group.",
+          "type": "boolean",
+          "x-ms-visibility": "advanced",
+          "readOnly": true
+        },
+        "GroupKey": {
+          "type": "string",
+          "readOnly": true
+        }
+      }
+    },
+    "Enumerations-Importance": {
+      "title": "Importance",
+      "description": "Indicates the importance.",
+      "enum": [
+        "Low",
+        "Normal",
+        "High"
+      ],
+      "type": "string",
+      "x-ms-visibility": "important"
+    },
+    "Enumerations-Sensitivity": {
+      "title": "Sensitivity",
+      "description": "Indicates the level of privacy.",
+      "enum": [
+        "Normal",
+        "Personal",
+        "Private",
+        "Confidential"
+      ],
+      "type": "string"
+    },
+    "Enumerations-TaskStatusV2": {
+      "title": "Status",
+      "description": "Indicates state or progress of the task.",
+      "enum": [
+        "NotStarted",
+        "InProgress",
+        "Completed",
+        "WaitingOnOthers",
+        "Deferred"
+      ],
+      "type": "string",
+      "x-ms-visibility": "important"
+    },
+    "ComplexTypes-DateTimeTimeZoneV2": {
+      "type": "object",
+      "properties": {
+        "DateTime": {
+          "title": "Date-Time (no timezone offset)",
+          "description": "A single point of time in a combined date and time representation (<date>T<time>) according to ISO 8601 format.",
+          "type": "string",
+          "x-ms-visibility": "important"
+        },
+        "TimeZone": {
+          "type": "string",
+          "description": "The time zone name for this value."
+        }
+      }
+    },
+    "@odata.nextLink": {
+      "type": "string",
+      "x-ms-visibility": "internal",
+      "title": "OData nextLink"
+    }
+  },
+  "parameters": {
+    "OdataQueryOption-$top": {
+      "in": "query",
+      "name": "$top",
+      "type": "integer",
+      "required": false,
+      "minimum": 0,
+      "x-ms-visibility": "advanced",
+      "description": "The number of items in the queried collection to be included in the result.",
+      "x-ms-summary": "Top Items"
+    },
+    "OdataQueryOption-$skip": {
+      "in": "query",
+      "name": "$skip",
+      "required": false,
+      "type": "integer",
+      "minimum": 0,
+      "x-ms-visibility": "advanced",
+      "description": "The number of items in the queried collection that are to be skipped and not included in the result. This is applied before the $top option.",
+      "x-ms-summary": "Skip Items"
+    },
+    "attachment_id": {
+      "in": "path",
+      "name": "attachment_id",
+      "type": "string",
+      "required": true,
+      "description": "The programatic ID of an attachment, unique in the user's mailbox.",
+      "x-ms-summary": "Attachment ID",
+      "x-ms-url-encoding": "single"
+    },
+    "folder_id": {
+      "in": "path",
+      "name": "folder_id",
+      "type": "string",
+      "required": true,
+      "description": "The default 'Tasks' well-known folder name, or a programatic ID of a task folder, unique in the user's mailbox.",
+      "x-ms-summary": "Task Folder ID",
+      "x-ms-url-encoding": "single"
+    },
+    "group_id": {
+      "in": "path",
+      "name": "group_id",
+      "type": "string",
+      "required": true,
+      "description": "The programatic ID of a task group, unique in the user's mailbox.",
+      "x-ms-summary": "Task Group ID",
+      "x-ms-url-encoding": "single"
+    },
+    "task_id": {
+      "in": "path",
+      "name": "task_id",
+      "type": "string",
+      "required": true,
+      "description": "The programatic task ID, unique in the user's mailbox.",
+      "x-ms-summary": "Task ID",
+      "x-ms-url-encoding": "single"
+    }
+  },
+  "responses": {
+    "TaskResource": {
+      "description": "Operation Successful",
+      "schema": {
+        "$ref": "#/definitions/TaskResource"
+      }
+    },
+    "OdataCollection<TaskResource>": {
+      "description": "Operation Successful",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "@odata.nextLink": {
+            "$ref": "#/definitions/@odata.nextLink"
+          },
+          "value": {
+            "title": "The Task entities of the operation.",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TaskResource"
+            }
+          }
+        }
+      }
+    },
+    "TaskFolder": {
+      "description": "Operation Successful",
+      "schema": {
+        "$ref": "#/definitions/TaskFolder"
+      }
+    },
+    "OdataCollection<TaskFolder>": {
+      "description": "Operation Successful",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "@odata.nextLink": {
+            "$ref": "#/definitions/@odata.nextLink"
+          },
+          "value": {
+            "title": "The Task Folder entities of the operation.",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TaskFolder"
+            }
+          }
+        }
+      }
+    },
+    "TaskGroup": {
+      "description": "Operation Successful",
+      "schema": {
+        "$ref": "#/definitions/TaskGroup"
+      }
+    },
+    "OdataCollection<TaskGroup>": {
+      "description": "Operation Successful",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "@odata.nextLink": {
+            "$ref": "#/definitions/@odata.nextLink"
+          },
+          "value": {
+            "title": "The Task Group entities of the operation.",
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/TaskGroup"
+            }
+          }
+        }
+      }
+    }
+  }
+}

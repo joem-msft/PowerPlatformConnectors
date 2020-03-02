@@ -1,0 +1,107 @@
+{
+  "info": {
+    "version": "1.0.0",
+    "displayName": "Outlook Tasks",
+    "description": "Outlook Tasks service lets you create, read, synchronize, update and delete your tasks that are secured by Azure Active Directory in Office 365 or a Microsoft account."
+  },
+  "backend-service": {
+    "swagger": {
+      "$ref": "./apiDefinition-backend.swagger.json"
+    },
+    "error-handling": {
+      "description": "Global error handling configuration. e.g. default transformations to convert an error response into a PowerPlatform client error payload."
+    }
+  },
+  "codeful-service": {
+    "swagger": {
+      "$ref": "./apiDefinition-codeful.swagger.json"
+    },
+    "auth-options": "TODO"
+  },
+  "tooling-version": "2019-12-31", // the default tooling version It's here to add a discussion about how we should support safe-deployment of tooling and/or runtime implementations.
+  "actions": {
+    "GetTasks": {
+      "v1": {
+        "title": "Gets tasks (no modification of bodys)",
+        "tooling-version": "2020-02-28", // Overrides the default. Older versions of functions may need to be sure they don't break when using a new version that has breaking changes.
+        "path": "/tasks", // Not required for this action, since it doesn't add additional info, but it does help to keep our current paradigms where the incomming url is similar to the backend path.
+        "parameters": [], // We should allow for auto-including the base operation
+        "responses": {},
+        "execution": {
+          "type": "call-backend",
+          "service": "backend", // or "codeful". Optional, default is 'backend'.
+          "operationId": "GetTasks"
+        }
+      },
+      "v2": {
+        "title": "Gets tasks (adds on body transformations)"
+      }
+    },
+    "GetTasksForFlow": {
+      "v1": {
+        "title": "Gets tasks (for Flow)",
+        "description": "Transforms the response so it's usable by the Flow designer. i.e. odata collection result wrapper is removed and just the array of items is returned.",
+        "path": "/tasks", // Not required for this action, since it doesn't add additional info, but it does help to keep our current paradigms where the incomming url is similar to the backend path.
+        "parameters": [], // We should allow for auto-including the base operation
+        "responses": {
+          ""
+        },
+        "execution": {
+          "type": "call-action",
+          "action-name": "GetTasks",
+          "action-version": "v1",
+          // TODO: Add the transformations to the body
+        }
+      },
+      "v2": {
+        "title": "Gets tasks (adds on body transformations)"
+      }
+    },
+    "CreateTask": {
+      "v1": {}
+    },
+    "GetTasksInFolder": {
+      "v1": {}
+    },
+    "CreateTaskInFolder": {
+      "v1": {}
+    },
+    "Codeful-Action1": {
+      "description": "An example of an action that targets our codeful backend.",
+      "v1": {
+        "targetOperation": {
+          "service": "codefulConnector",
+          "operationId": "Action1"
+        }
+      }
+    }
+  },
+  "triggers": {
+    "OnNewTask": {
+      "v1": {
+        "type": "polling-v2",
+        "get-items": {
+          // ??? not fleshed out yet
+          "action": {
+            "$ref": "#/actions/GetTasks/v1"
+          }
+        },
+        "custom-state": {
+          "{some-custom-variable}": {}
+        }
+      }
+    },
+    "OnTaskCompleted": {
+      "v1": {}
+    }
+  },
+  "error-handling": {
+    "description": "TODO: place to store",
+    "default": {},
+    ""
+  },
+  "transformations": {},
+  "definitions": {},
+  "parameters": {},
+  "responses": {}
+}
